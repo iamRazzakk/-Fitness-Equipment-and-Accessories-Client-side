@@ -6,6 +6,11 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: (
+      <h1 className="flex items-center justify-center text-2xl font-bold">
+        Error
+      </h1>
+    ),
     children: [
       {
         path: "/",

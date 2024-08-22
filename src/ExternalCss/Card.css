@@ -42,3 +42,9 @@
 .img-container:hover .view-details {
   display: inline-block;
 }
+.icons:hover {
+  border: 2px dotted gray;
+}
+.withUs:hover {
+  font-size: 22px;
+}
