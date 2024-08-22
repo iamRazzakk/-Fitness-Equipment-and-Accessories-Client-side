@@ -7,8 +7,12 @@ import img5 from "../../assets/whywhitus/sec.png";
 const WhyWithUs = () => {
   return (
     <div className="lg:mt-32 md:mt-12 mt-8 flex flex-col lg:flex-row items-center">
-      <div className="flex-1 hover:shadow-lg hover:shadow-gray-400">
-        <img src={img} alt="Why With Us" className="rounded-md  object-cover" />
+      <div className="flex-1 hover:shadow-lg hover:shadow-gray-400 rounded-lg">
+        <img
+          src={img}
+          alt="Why With Us"
+          className="rounded-lg hover:rounded-md object-cover"
+        />
       </div>
       <div className="flex-1 space-y-6 mt-8 lg:mt-0 lg:ml-12">
         <div className="flex items-center gap-6 p-3  rounded-lg shadow-lg">

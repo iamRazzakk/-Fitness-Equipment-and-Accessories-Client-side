@@ -6,14 +6,14 @@ import WhyWithUs from "./Home/WhyWithUs";
 
 const Home = () => {
   return (
-    <>
+    <div className="font-Lexend">
       <Header />
       <Categories />
       <FeaturedProducts />
       <WhyWithUs />
       {/* add another section */}
       <ImageGallery />
-    </>
+    </div>
   );
 };
 
