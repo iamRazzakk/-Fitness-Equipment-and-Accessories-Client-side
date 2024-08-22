@@ -6,7 +6,7 @@ import router from "./routes/Routers.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <div className="font-Lexend ">
+    <div className="font-Lexend bg-black text-white">
       <RouterProvider router={router}></RouterProvider>
     </div>
   </StrictMode>

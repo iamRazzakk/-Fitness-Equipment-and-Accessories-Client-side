@@ -1,6 +1,7 @@
 import Header from "../components/Header";
 import Categories from "./Home/Categories";
 import FeaturedProducts from "./Home/FeaturedProducts";
+import ImageGallery from "./Home/ImageGallery";
 
 const Home = () => {
   return (
@@ -8,6 +9,8 @@ const Home = () => {
       <Header />
       <Categories />
       <FeaturedProducts />
+      {/* add another section */}
+      <ImageGallery />
     </>
   );
 };

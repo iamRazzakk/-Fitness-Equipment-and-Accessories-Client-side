@@ -8,7 +8,13 @@
 }
 
 .img-container:hover .img {
-  transform: scale(1.1); /* Zoom effect */
+  transform: scale(1.1);
+}
+.galleyImg {
+  transition: transform 0.3s ease-in-out;
+}
+.galleyImg:hover {
+  transform: scale(1.1);
 }
 
 .button-container {
@@ -20,18 +26,13 @@
   left: 0;
   right: 0;
   padding: 1rem;
-  background: rgba(
-    255,
-    255,
-    255,
-    0.8
-  ); /* Optional: background to make buttons stand out */
+  background: rgba(255, 255, 255, 0.8);
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
 
 .img-container:hover .button-container {
-  opacity: 1; /* Show buttons on hover */
+  opacity: 1;
 }
 
 .button-container .view-details {

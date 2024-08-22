@@ -22,11 +22,11 @@ const FeaturedProducts = () => {
             spaceBetween: 20,
           },
           768: {
-            slidesPerView: 4,
+            slidesPerView: 3,
             spaceBetween: 40,
           },
           1024: {
-            slidesPerView: 5,
+            slidesPerView: 4,
             spaceBetween: 50,
           },
         }}
@@ -37,11 +37,13 @@ const FeaturedProducts = () => {
         className="mySwiper lg:mt-8 md:mt-6 mt-4"
       >
         <SwiperSlide className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden img-container">
-          <img
-            className="w-full h-48 object-cover img"
-            src={exerciseBallImg}
-            alt="Exercise Ball"
-          />
+          <div className="p-3 bg-gray-400">
+            <img
+              className="w-full h-48 object-cover img"
+              src={exerciseBallImg}
+              alt="Exercise Ball"
+            />
+          </div>
           <div className="p-6">
             <h2 className="text-xl font-bold text-gray-800">Title</h2>
             <p className="mt-2 text-gray-600">Description</p>
@@ -53,11 +55,13 @@ const FeaturedProducts = () => {
         </SwiperSlide>
 
         <SwiperSlide className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden img-container">
-          <img
-            className="w-full h-48 object-cover img"
-            src={exerciseBallImg}
-            alt="Exercise Ball"
-          />
+          <div className="p-3 bg-gray-400">
+            <img
+              className="w-full h-48 object-cover img"
+              src={exerciseBallImg}
+              alt="Exercise Ball"
+            />
+          </div>
           <div className="p-6">
             <h2 className="text-xl font-bold text-gray-800">Title</h2>
             <p className="mt-2 text-gray-600">Description</p>
@@ -68,11 +72,13 @@ const FeaturedProducts = () => {
           </div>
         </SwiperSlide>
         <SwiperSlide className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden img-container">
-          <img
-            className="w-full h-48 object-cover img"
-            src={exerciseBallImg}
-            alt="Exercise Ball"
-          />
+          <div className="p-3 bg-gray-400">
+            <img
+              className="w-full h-48 object-cover img"
+              src={exerciseBallImg}
+              alt="Exercise Ball"
+            />
+          </div>
           <div className="p-6">
             <h2 className="text-xl font-bold text-gray-800">Title</h2>
             <p className="mt-2 text-gray-600">Description</p>
@@ -83,11 +89,13 @@ const FeaturedProducts = () => {
           </div>
         </SwiperSlide>
         <SwiperSlide className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden img-container">
-          <img
-            className="w-full h-48 object-cover img"
-            src={exerciseBallImg}
-            alt="Exercise Ball"
-          />
+          <div className="p-3 bg-gray-400">
+            <img
+              className="w-full h-48 object-cover img"
+              src={exerciseBallImg}
+              alt="Exercise Ball"
+            />
+          </div>
           <div className="p-6">
             <h2 className="text-xl font-bold text-gray-800">Title</h2>
             <p className="mt-2 text-gray-600">Description</p>
@@ -98,11 +106,13 @@ const FeaturedProducts = () => {
           </div>
         </SwiperSlide>
         <SwiperSlide className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden img-container">
-          <img
-            className="w-full h-48 object-cover img"
-            src={exerciseBallImg}
-            alt="Exercise Ball"
-          />
+          <div className="p-3 bg-gray-400">
+            <img
+              className="w-full h-48 object-cover img"
+              src={exerciseBallImg}
+              alt="Exercise Ball"
+            />
+          </div>
           <div className="p-6">
             <h2 className="text-xl font-bold text-gray-800">Title</h2>
             <p className="mt-2 text-gray-600">Description</p>
@@ -113,11 +123,13 @@ const FeaturedProducts = () => {
           </div>
         </SwiperSlide>
         <SwiperSlide className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden img-container">
-          <img
-            className="w-full h-48 object-cover img"
-            src={exerciseBallImg}
-            alt="Exercise Ball"
-          />
+          <div className="p-3 bg-gray-400">
+            <img
+              className="w-full h-48 object-cover img"
+              src={exerciseBallImg}
+              alt="Exercise Ball"
+            />
+          </div>
           <div className="p-6">
             <h2 className="text-xl font-bold text-gray-800">Title</h2>
             <p className="mt-2 text-gray-600">Description</p>
