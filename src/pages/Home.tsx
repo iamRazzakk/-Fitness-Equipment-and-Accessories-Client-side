@@ -6,7 +6,7 @@ import WhyWithUs from "./Home/WhyWithUs";
 
 const Home = () => {
   return (
-    <div className="font-Lexend">
+    <div className="font-Lexend bg-black text-white">
       <Header />
       <Categories />
       <FeaturedProducts />
