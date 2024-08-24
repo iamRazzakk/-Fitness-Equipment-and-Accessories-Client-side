@@ -60,10 +60,10 @@ const FeaturedProducts = () => {
               </h2>
               <p className="mt-2 text-gray-600">{product.description}</p>
               <div className="mt-4 flex items-start justify-between">
-                <Link to={`/products/${product._id}`}>
-                  <Button>View Details</Button>
+                <Link to={"/products"}>
+                  <Button>See More</Button>
                 </Link>
-                <Button variant="secondary">Add to Cart</Button>
+                <h1 className="text-black">${product.price}</h1>
               </div>
             </div>
           </SwiperSlide>

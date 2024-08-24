@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
+import { FaCartArrowDown } from "react-icons/fa";
 
 const Navbar = () => {
   return (
@@ -71,6 +72,9 @@ const Navbar = () => {
           About Us
         </NavLink>
       </ul>
+      <Link to="/cart">
+        <FaCartArrowDown className="text-2xl" />
+      </Link>
     </nav>
   );
 };

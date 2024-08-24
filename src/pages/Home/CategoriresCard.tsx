@@ -3,12 +3,18 @@ import { useGetProductsQuery } from "@/redux/api/baseApi";
 import headerImg from "../../assets/aboutUs/products.jpg";
 import { Link, NavLink } from "react-router-dom";
 import { IProducts } from "@/types/types";
+import { useAppDispatch } from "../../redux/hook";
+import { addToCart } from "@/redux/features/cartSlice";
 const CategoriesCard = () => {
   const { data: Products, isLoading } = useGetProductsQuery([]);
-
+  const dispatch = useAppDispatch();
   if (isLoading) {
     return <h1 className="text-white">Loading</h1>;
   }
+  const handleAddToCart = (product: IProducts) => {
+    // console.log(product);
+    dispatch(addToCart(product));
+  };
 
   return (
     <div>
@@ -28,6 +34,23 @@ const CategoriesCard = () => {
       <div>
         <NavLink to="/">Home </NavLink>/
         <NavLink to="/products"> products</NavLink>
+      </div>
+      <div className="lg:mt-8 flex items-center gap-4">
+        {/* Barbell */}
+        <label className="flex items-center">
+          <input type="checkbox" value="Barbell" className="mr-2" />
+          Barbell
+        </label>
+        {/* Treadmill */}
+        <label className="flex items-center">
+          <input type="checkbox" value="Treadmill" className="mr-2" />
+          Treadmill
+        </label>
+        {/* Benches */}
+        <label className="flex items-center">
+          <input type="checkbox" value="Benches" className="mr-2" />
+          Benches
+        </label>
       </div>
       <div className="lg:mt-12 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 text-white">
         {Products?.data?.map((product: IProducts) => (
@@ -49,8 +72,12 @@ const CategoriesCard = () => {
                 <Link to={`/products/${product._id}`}>
                   <Button>View Details</Button>
                 </Link>
-
-                <Button variant="secondary">Add to Cart</Button>
+                <Button
+                  onClick={() => handleAddToCart(product)}
+                  variant="secondary"
+                >
+                  Add to Cart
+                </Button>
               </div>
             </div>
           </div>
