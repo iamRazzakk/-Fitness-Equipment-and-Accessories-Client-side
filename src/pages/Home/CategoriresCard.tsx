@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useGetProductsQuery } from "@/redux/api/baseApi";
 import headerImg from "../../assets/aboutUs/products.jpg";
 import { Link, NavLink } from "react-router-dom";
+import { IProducts } from "@/types/types";
 const CategoriesCard = () => {
   const { data: Products, isLoading } = useGetProductsQuery([]);
 
@@ -29,9 +30,9 @@ const CategoriesCard = () => {
         <NavLink to="/products"> products</NavLink>
       </div>
       <div className="lg:mt-12 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 text-white">
-        {Products?.data?.map((product) => (
+        {Products?.data?.map((product: IProducts) => (
           <div
-            key={product.id}
+            key={product._id}
             className="max-w-sm w-full rounded-lg shadow-lg overflow-hidden img-container border"
           >
             <div className="p-3 ">
@@ -45,9 +46,10 @@ const CategoriesCard = () => {
               <h2 className="text-xl font-bold ">{product.name}</h2>
               <p className="mt-2 text-gray-600">{product.description}</p>
               <div className="mt-4 flex items-start justify-between">
-                <Link to={`api/products/${product._id}`}>
+                <Link to={`/products/${product._id}`}>
                   <Button>View Details</Button>
                 </Link>
+
                 <Button variant="secondary">Add to Cart</Button>
               </div>
             </div>
