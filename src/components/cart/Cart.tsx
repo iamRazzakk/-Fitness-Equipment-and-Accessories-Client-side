@@ -1,15 +1,49 @@
+import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
+
 const Cart = () => {
+  const products = useSelector((state: RootState) => state.cart.products);
+  const totalPrice = useSelector((state: RootState) => state.cart.totalPrice);
+  const selectedItems = useSelector(
+    (state: RootState) => state.cart.selectedItems
+  );
+  console.log(products);
+
   return (
-    <div className=" p-4 border border-gray-300 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold mb-4 text-center ">
+    <div className="p-4   rounded-lg shadow-lg">
+      <h2 className="text-2xl font-semibold mb-4 text-center">
         Happy Shopping ❤️
       </h2>
       <div className="lg:flex items-start gap-4">
-        <div className="flex-1 border">my image here</div>
-        <div className="border flex-1">
+        <div className="flex-1  p-4">
+          <h3 className="text-xl font-semibold mb-4">Your Cart Items:</h3>
+          {products.length === 0 ? (
+            <p>Your cart is empty.</p>
+          ) : (
+            <div>
+              {products.map((product) => (
+                <div key={product._id} className="flex items-center mb-4  p-2">
+                  <img
+                    src={product.images}
+                    alt={product.name}
+                    className="w-20 h-20 object-cover mr-4"
+                  />
+                  <div className="flex-1">
+                    <h4 className="text-lg font-semibold">{product.name}</h4>
+                    <p>Price: ${product.price}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className=" flex-1 p-4">
           <div className="mt-4">
-            <h3 className="text-xl font-semibold">Total:</h3>
-            <p className="text-xl">Price</p>
+            <h3 className="text-xl font-semibold">Summary:</h3>
+            <p className="text-lg">Total Items: {selectedItems}</p>
+            <p className="text-xl font-semibold">
+              Total Price: ${totalPrice.toFixed(2)}
+            </p>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import headerImg from "../../assets/aboutUs/products.jpg";
 import { Link, NavLink } from "react-router-dom";
 import { IProducts } from "@/types/types";
 import { useAppDispatch } from "../../redux/hook";
-import { addToCart } from "@/redux/features/cartSlice";
+import { cddToCart } from "@/redux/features/cartSlice";
 const CategoriesCard = () => {
   const { data: Products, isLoading } = useGetProductsQuery([]);
   const dispatch = useAppDispatch();
@@ -12,8 +12,9 @@ const CategoriesCard = () => {
     return <h1 className="text-white">Loading</h1>;
   }
   const handleAddToCart = (product: IProducts) => {
+    const quantity = 1;
     // console.log(product);
-    dispatch(addToCart(product));
+    dispatch(cddToCart({ product, quantity }));
   };
 
   return (
