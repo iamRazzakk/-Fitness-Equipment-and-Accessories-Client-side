@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import { Toaster } from "sonner";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/Routers.tsx";
 import { Provider } from "react-redux";
@@ -10,6 +11,7 @@ createRoot(document.getElementById("root")!).render(
     <Provider store={store}>
       <div className="font-Lexend ">
         <RouterProvider router={router}></RouterProvider>
+        <Toaster />
       </div>
     </Provider>
   </StrictMode>

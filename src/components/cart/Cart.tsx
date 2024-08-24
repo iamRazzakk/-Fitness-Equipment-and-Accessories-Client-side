@@ -1,13 +1,27 @@
 import { RootState } from "@/redux/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { GoPlusCircle } from "react-icons/go";
+import { CiCircleMinus } from "react-icons/ci";
+import {
+  decrementQuantity,
+  incrementQuantity,
+} from "@/redux/features/cartSlice";
 
 const Cart = () => {
+  const dispatch = useDispatch();
   const products = useSelector((state: RootState) => state.cart.products);
   const totalPrice = useSelector((state: RootState) => state.cart.totalPrice);
   const selectedItems = useSelector(
     (state: RootState) => state.cart.selectedItems
   );
   console.log(products);
+  const handleIncrement = (productId: string) => {
+    dispatch(incrementQuantity(productId));
+  };
+
+  const handleDecrement = (productId: string) => {
+    dispatch(decrementQuantity(productId));
+  };
 
   return (
     <div className="p-4   rounded-lg shadow-lg">
@@ -26,11 +40,22 @@ const Cart = () => {
                   <img
                     src={product.images}
                     alt={product.name}
-                    className="w-20 h-20 object-cover mr-4"
+                    className="w-20 h-20 object-cover rounded-md mr-4"
                   />
                   <div className="flex-1">
                     <h4 className="text-lg font-semibold">{product.name}</h4>
                     <p>Price: ${product.price}</p>
+                    <div className="flex items-center gap-2">
+                      <GoPlusCircle
+                        onClick={() => handleIncrement(product._id)}
+                        className="text-3xl cursor-pointer hover:bg-white hover:text-black rounded-full"
+                      />
+                      <span>{product.quantity}</span>
+                      <CiCircleMinus
+                        onClick={() => handleDecrement(product._id)}
+                        className="text-3xl cursor-pointer hover:bg-white hover:text-black rounded-full"
+                      />
+                    </div>
                   </div>
                 </div>
               ))}

@@ -5,6 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import { IProducts } from "@/types/types";
 import { useAppDispatch } from "../../redux/hook";
 import { cddToCart } from "@/redux/features/cartSlice";
+import { toast } from "sonner";
 const CategoriesCard = () => {
   const { data: Products, isLoading } = useGetProductsQuery([]);
   const dispatch = useAppDispatch();
@@ -15,6 +16,7 @@ const CategoriesCard = () => {
     const quantity = 1;
     // console.log(product);
     dispatch(cddToCart({ product, quantity }));
+    toast.success(`${product.name} has been added to your cart!`);
   };
 
   return (
