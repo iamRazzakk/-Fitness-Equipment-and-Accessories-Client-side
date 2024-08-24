@@ -1,12 +1,22 @@
 import { useGetSingleProductsQuery } from "@/redux/api/baseApi";
 import { useParams } from "react-router-dom";
 import { Button } from "./ui/button";
+import { useAppDispatch } from "@/redux/hook";
+import { cddToCart } from "@/redux/features/cartSlice";
+import { toast } from "sonner";
+import { IProducts } from "@/types/types";
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const dispatch = useAppDispatch();
   const { data: response, error, isLoading } = useGetSingleProductsQuery(id);
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error </div>;
+  const handleAddToCart = (product: IProducts) => {
+    const quantity = 1;
+    dispatch(cddToCart({ product, quantity }));
+    toast.success("Product Add To Cart Successfully");
+  };
   const product = response?.data;
 
   if (!product) return <div>No product found</div>;
@@ -29,8 +39,19 @@ const ProductDetails = () => {
               ${product.price}
             </span>
           </div>
+          <p className="mt-4">
+            {product.stock > 0 ? (
+              <h2 className="bg-green-400 rounded w-24 px-2">In Stock</h2>
+            ) : (
+              <h2 className="bg-red-400 rounded w-24 px-2">Out of Stock</h2>
+            )}
+          </p>
           <div className="mt-6">
-            <Button variant="secondary" className="  px-4 py-2 rounded">
+            <Button
+              onClick={() => handleAddToCart(product)}
+              variant="secondary"
+              className="  px-4 py-2 rounded"
+            >
               Add to Cart
             </Button>
           </div>

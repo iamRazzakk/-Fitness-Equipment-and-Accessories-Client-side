@@ -8,6 +8,7 @@ import {
   removeFromCart,
 } from "@/redux/features/cartSlice";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ const Cart = () => {
   const handleRemoveItem = (productId: string) => {
     dispatch(removeFromCart(productId));
   };
+  const hasProducts = products.length > 0;
 
   return (
     <div className="p-4   rounded-lg shadow-lg">
@@ -79,6 +81,11 @@ const Cart = () => {
               Total Price: ${totalPrice.toFixed(2)}
             </p>
           </div>
+          <Button disabled={!hasProducts}>
+            <Link to="/checkout">
+              {hasProducts ? "Check out" : "No items to check out"}
+            </Link>
+          </Button>
         </div>
       </div>
     </div>
