@@ -5,7 +5,9 @@ import { CiCircleMinus } from "react-icons/ci";
 import {
   decrementQuantity,
   incrementQuantity,
+  removeFromCart,
 } from "@/redux/features/cartSlice";
+import { Button } from "../ui/button";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -14,13 +16,16 @@ const Cart = () => {
   const selectedItems = useSelector(
     (state: RootState) => state.cart.selectedItems
   );
-  console.log(products);
+  // console.log(products);
   const handleIncrement = (productId: string) => {
     dispatch(incrementQuantity(productId));
   };
 
   const handleDecrement = (productId: string) => {
     dispatch(decrementQuantity(productId));
+  };
+  const handleRemoveItem = (productId: string) => {
+    dispatch(removeFromCart(productId));
   };
 
   return (
@@ -55,6 +60,10 @@ const Cart = () => {
                         onClick={() => handleDecrement(product._id)}
                         className="text-3xl cursor-pointer hover:bg-white hover:text-black rounded-full"
                       />
+
+                      <Button onClick={() => handleRemoveItem(product._id)}>
+                        Remove
+                      </Button>
                     </div>
                   </div>
                 </div>
