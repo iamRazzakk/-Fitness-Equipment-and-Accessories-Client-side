@@ -6,5 +6,7 @@ export type IProducts = {
     stock: number;
     images: string;
     quantity?: number;
-    category?: any
+    category?: any;
+    createdAt?: Date
+    updatedAt?: Date
 }
