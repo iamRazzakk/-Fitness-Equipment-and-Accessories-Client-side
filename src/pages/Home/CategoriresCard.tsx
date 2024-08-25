@@ -43,6 +43,16 @@ const CategoriesCard = () => {
       }
     });
   };
+  const handleClearFilters = () => {
+    // Clear local state filters
+    setSelectedCategories([]);
+    setMinPrice(null);
+    setMaxPrice(null);
+    setSortOrder(null);
+
+    // Dispatch clearFilters action to reset Redux state
+    dispatch(clearFilters());
+  };
 
   const filteredProducts = Products?.data?.filter((product: IProducts) => {
     // Category filtering
@@ -127,7 +137,7 @@ const CategoriesCard = () => {
         </label>
       </div>
 
-      <div className="lg:mt-8">
+      <div className="lg:mt-4">
         <div className="lg:flex items-center justify-start gap-4">
           <Input
             className="flex-1 text-black"
@@ -161,13 +171,20 @@ const CategoriesCard = () => {
             </DropdownMenu>
           </div>
         </div>
+        <Button
+          className="lg:mt-4"
+          onClick={handleClearFilters}
+          variant="secondary"
+        >
+          Clear Filters
+        </Button>
       </div>
 
-      <div className="lg:mt-12 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 text-white">
+      <div className="lg:mt-12 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 text-white">
         {sortedProducts?.map((product: IProducts) => (
           <div
             key={product._id}
-            className="max-w-sm w-full rounded-lg shadow-lg overflow-hidden img-container border"
+            className="max-w-sm w-full rounded-lg shadow-lg overflow-hidden img-container border border-gray-500"
           >
             <div className="p-3 ">
               <img
@@ -178,7 +195,7 @@ const CategoriesCard = () => {
             </div>
             <div className="p-6">
               <h2 className="text-xl font-bold ">{product.name}</h2>
-              <p className="mt-2 text-gray-600">{product.description}</p>
+              <p className="mt-2 text-gray-300">${product.price}</p>
               <div className="mt-4 flex items-start justify-between">
                 <Link to={`/products/${product._id}`}>
                   <Button>View Details</Button>

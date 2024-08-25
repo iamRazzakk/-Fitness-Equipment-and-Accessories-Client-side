@@ -1,8 +1,13 @@
+import { useDispatch } from "react-redux";
 import barbell from "../../assets/barbell.png";
 import benches from "../../assets/benches.jpg";
 import treadmill from "../../assets/treadmill.png";
+import { Link, useNavigate } from "react-router-dom";
+import { setSelectedCategory } from "@/redux/features/categoriesSlice";
 const Categories = () => {
-  const categories = [
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const AllCategories = [
     {
       name: "Barbell",
       img: barbell,
@@ -16,24 +21,33 @@ const Categories = () => {
       img: treadmill,
     },
   ];
+  const handleCategoryClick = (categoryName) => {
+    dispatch(setSelectedCategory(categoryName));
+  };
   return (
     <div className="lg:mt-12">
       <h1 className="text-3xl font-bold">Categories</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center lg:mt-8 md:mt-6 mt-4">
-        {categories?.map((category, idx) => (
-          <div
+        {AllCategories?.map((category, idx) => (
+          <Link
             key={idx}
-            className="flex flex-col items-center justify-center relative overflow-hidden "
+            to={`/products`}
+            onClick={() => handleCategoryClick(category.name)}
           >
-            <img
-              src={category?.img}
-              alt={category?.name}
-              className="lg:h-48 lg:w-48 rounded-full object-cover border border-gray-500 p-2"
-            />
-            <h3 className="text-xl font-semibold lg:mt-5 md:mt-4 mt-2">
-              {category?.name}
-            </h3>
-          </div>
+            <div
+              className="flex flex-col items-center justify-center relative overflow-hidden "
+              onClick={() => handleCategoryClick(category.name)}
+            >
+              <img
+                src={category?.img}
+                alt={category?.name}
+                className="lg:h-48 lg:w-48 rounded-full object-cover border border-gray-500 p-2"
+              />
+              <h3 className="text-xl font-semibold lg:mt-5 md:mt-4 mt-2">
+                {category?.name}
+              </h3>
+            </div>
+          </Link>
         ))}
       </div>
     </div>

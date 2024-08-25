@@ -1,26 +1,29 @@
-import { FaCheckCircle } from "react-icons/fa";
+import image1 from "../../assets/benefit/1.jpg";
+import image2 from "../../assets/benefit/2.jpg";
+import image3 from "../../assets/benefit/3.jpg";
+import image4 from "../../assets/benefit/4.jpg";
 
 const benefits = [
   {
     title: "High Quality",
     description: "Our products are made with the highest quality materials.",
-    icon: <FaCheckCircle className="text-green-500" />,
+    backgroundImage: image1,
   },
   {
     title: "Eco-Friendly",
     description: "We are committed to sustainability in all our products.",
-    icon: <FaCheckCircle className="text-green-500" />,
+    backgroundImage: image2,
   },
   {
     title: "Affordable",
     description:
       "Get the best value for your money with our competitive pricing.",
-    icon: <FaCheckCircle className="text-green-500" />,
+    backgroundImage: image3,
   },
   {
     title: "Fast Shipping",
     description: "Enjoy quick and reliable delivery to your doorstep.",
-    icon: <FaCheckCircle className="text-green-500" />,
+    backgroundImage: image4,
   },
 ];
 
@@ -30,17 +33,17 @@ const BenefitsofOurProducts = () => {
       <h2 className="text-3xl font-bold  text-white mb-6">
         Benefits of Our Products
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
-        {benefits.map((benefit, index) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
+        {benefits.map((benefit, idx) => (
           <div
-            key={index}
-            className="p-4 bg-white rounded-lg shadow-md text-center"
+            key={idx}
+            className="p-4 bg-white rounded-lg shadow-md text-center bg-cover bg-center h-64 flex flex-col justify-center items-center "
+            style={{ backgroundImage: `url(${benefit.backgroundImage})` }}
           >
-            <div className="text-4xl mb-4">{benefit.icon}</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+            <h3 className="text-xl font-semibold text-white mb-2">
               {benefit.title}
             </h3>
-            <p className="text-gray-600">{benefit.description}</p>
+            <p className="text-white">{benefit.description}</p>
           </div>
         ))}
       </div>
