@@ -146,7 +146,6 @@ const CategoriesCard = () => {
             onChange={(e) => setMaxPrice(Number(e.target.value) || null)}
           />
           <div className="flex-1">
-            {/* Sorting dropdown (re-enabled) */}
             <DropdownMenu>
               <DropdownMenuTrigger className="border px-4 py-[6px] rounded-md">
                 Sort the Products

@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import BenefitsofOurProducts from "./Home/BenefitsofOurProducts";
 import Categories from "./Home/Categories";
 import FeaturedProducts from "./Home/FeaturedProducts";
 import ImageGallery from "./Home/ImageGallery";
@@ -12,6 +13,7 @@ const Home = () => {
       <FeaturedProducts />
       <WhyWithUs />
       {/* add another section */}
+      <BenefitsofOurProducts />
       <ImageGallery />
     </div>
   );

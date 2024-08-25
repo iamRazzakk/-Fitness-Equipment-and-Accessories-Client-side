@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const initialState = {
     selectedCategories: [],
     priceRange: [0, 1000],
@@ -13,7 +14,7 @@ export const filterSlice = createSlice({
             const category = action.payload
             if (state.selectedCategories.includes(category)) {
                 state.selectedCategories = state.selectedCategories.filter(
-                    (cat) => cat !== category)
+                    (catg) => catg !== category)
             } else {
                 state.selectedCategories.push(category);
             }

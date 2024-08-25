@@ -5,5 +5,6 @@ export type IProducts = {
     description: string;
     stock: number;
     images: string;
-    quantity?: number
+    quantity?: number;
+    category?: any
 }

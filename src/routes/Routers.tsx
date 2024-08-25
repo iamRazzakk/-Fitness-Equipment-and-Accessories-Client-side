@@ -6,6 +6,7 @@ import CategoriresCard from "@/pages/Home/CategoriresCard";
 import ProductDetails from "@/components/ProductsDetails";
 import Cart from "@/components/cart/Cart";
 import Checkout from "@/components/cart/checkout/Checkout";
+import OrderSuccess from "@/components/cart/checkout/OrderSuccess";
 // import ProductDetails from "@/components/ProductsDetails";
 
 const router = createBrowserRouter([
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <Checkout />,
+      },
+      {
+        path: "/order-success",
+        element: <OrderSuccess />,
       },
     ],
   },
