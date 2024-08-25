@@ -7,6 +7,6 @@ export type IProducts = {
     images: string;
     quantity?: number;
     category?: any;
-    createdAt?: Date
-    updatedAt?: Date
+    createdAt?: string | number | Date
+    updatedAt?: string | number | Date
 }

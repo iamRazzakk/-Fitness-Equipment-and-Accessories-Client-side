@@ -81,6 +81,9 @@ const ProductsManagements = () => {
   return (
     <div className="p-4 rounded-lg shadow-md">
       {/* Filters */}
+      <h1 className="text-3xl font-bold mb-4">
+        Product List ({Products?.data.length})
+      </h1>
       <div className="mb-4">
         <div className="flex flex-col lg:flex-row items-start gap-4 mb-4">
           {/* Category Filters */}
