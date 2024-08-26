@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useGetProductsQuery } from "@/redux/api/baseApi";
 import headerImg from "../../assets/aboutUs/products.jpg";
@@ -17,15 +17,16 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setSelectedCategory } from "@/redux/features/categoriesSlice";
+import SearchBar from "@/components/searchBar/SearchBar";
 
 const CategoriesCard = () => {
   const { data: Products, isLoading } = useGetProductsQuery([]);
   const dispatch = useAppDispatch();
 
-  // Access selectedCategory from Redux store
   const selectedCategory = useSelector(
     (state: RootState) => state.category.selectedCategory
   );
+  const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
 
   const [sortOrder, setSortOrder] = useState<string | null>(null);
   const [minPrice, setMinPrice] = useState<number | null>(null);
@@ -42,12 +43,10 @@ const CategoriesCard = () => {
   };
 
   const handleCategoryChange = (category: string) => {
-    // Dispatch selected category to Redux store
     dispatch(setSelectedCategory(category));
   };
 
   const handleClearFilters = () => {
-    // Clear local state filters
     setMinPrice(null);
     setMaxPrice(null);
     setSortOrder(null);
@@ -55,19 +54,15 @@ const CategoriesCard = () => {
   };
 
   const filteredProducts = Products?.data?.filter((product: IProducts) => {
-    // Category filtering based on Redux state
     const categoryMatch =
-      selectedCategory === null || product.category === selectedCategory;
+      !selectedCategory || product.category === selectedCategory;
+    const searchMatch =
+      !searchTerm ||
+      product.name.toLowerCase().includes(searchTerm.toLowerCase());
 
-    // Price filtering
-    const priceMatch =
-      (minPrice === null || product.price >= minPrice) &&
-      (maxPrice === null || product.price <= maxPrice);
-
-    return categoryMatch && priceMatch;
+    return categoryMatch && searchMatch;
   });
 
-  // Sorting products
   const sortedProducts = filteredProducts?.sort(
     (a: IProducts, b: IProducts) => {
       if (sortOrder === "asc") {
@@ -101,7 +96,6 @@ const CategoriesCard = () => {
       </div>
 
       <div className="lg:mt-8 flex items-center gap-4">
-        {/* Barbell */}
         <label className="flex items-center">
           <input
             onChange={() => handleCategoryChange("Barbell")}
@@ -112,7 +106,6 @@ const CategoriesCard = () => {
           />
           Barbell
         </label>
-        {/* Treadmill */}
         <label className="flex items-center">
           <input
             onChange={() => handleCategoryChange("Treadmill")}
@@ -123,7 +116,6 @@ const CategoriesCard = () => {
           />
           Treadmill
         </label>
-        {/* Benches */}
         <label className="flex items-center">
           <input
             onChange={() => handleCategoryChange("Benches")}
@@ -144,7 +136,7 @@ const CategoriesCard = () => {
             id="minPrice"
             placeholder="Min Price"
             value={minPrice !== null ? minPrice : ""}
-            onChange={(e) => setMinPrice(Number(e.target.value) || null)}
+            onChange={(e) => setMinPrice(Number(e.target.value))}
           />
           <Input
             className="flex-1 text-black"
@@ -152,7 +144,7 @@ const CategoriesCard = () => {
             id="maxPrice"
             placeholder="Max Price"
             value={maxPrice !== null ? maxPrice : ""}
-            onChange={(e) => setMaxPrice(Number(e.target.value) || null)}
+            onChange={(e) => setMaxPrice(Number(e.target.value))}
           />
           <div className="flex-1">
             <DropdownMenu>
@@ -177,6 +169,7 @@ const CategoriesCard = () => {
         >
           Clear Filters
         </Button>
+        <SearchBar />
       </div>
 
       <div className="lg:mt-12 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 text-white">
