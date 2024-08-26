@@ -14,12 +14,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { setSelectedCategory } from "@/redux/features/categoriesSlice";
 
 const CategoriesCard = () => {
   const { data: Products, isLoading } = useGetProductsQuery([]);
   const dispatch = useAppDispatch();
 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  // Access selectedCategory from Redux store
+  const selectedCategory = useSelector(
+    (state: RootState) => state.category.selectedCategory
+  );
+
   const [sortOrder, setSortOrder] = useState<string | null>(null);
   const [minPrice, setMinPrice] = useState<number | null>(null);
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
@@ -35,30 +42,22 @@ const CategoriesCard = () => {
   };
 
   const handleCategoryChange = (category: string) => {
-    setSelectedCategories((prevSelectedCategories) => {
-      if (prevSelectedCategories.includes(category)) {
-        return prevSelectedCategories.filter((cat) => cat !== category);
-      } else {
-        return [...prevSelectedCategories, category];
-      }
-    });
+    // Dispatch selected category to Redux store
+    dispatch(setSelectedCategory(category));
   };
+
   const handleClearFilters = () => {
     // Clear local state filters
-    setSelectedCategories([]);
     setMinPrice(null);
     setMaxPrice(null);
     setSortOrder(null);
-
-    // Dispatch clearFilters action to reset Redux state
-    dispatch(clearFilters());
+    dispatch(setSelectedCategory(null));
   };
 
   const filteredProducts = Products?.data?.filter((product: IProducts) => {
-    // Category filtering
+    // Category filtering based on Redux state
     const categoryMatch =
-      selectedCategories.length === 0 ||
-      selectedCategories.includes(product.category);
+      selectedCategory === null || product.category === selectedCategory;
 
     // Price filtering
     const priceMatch =
@@ -109,7 +108,7 @@ const CategoriesCard = () => {
             type="checkbox"
             value="Barbell"
             className="mr-2"
-            checked={selectedCategories.includes("Barbell")}
+            checked={selectedCategory === "Barbell"}
           />
           Barbell
         </label>
@@ -120,7 +119,7 @@ const CategoriesCard = () => {
             type="checkbox"
             value="Treadmill"
             className="mr-2"
-            checked={selectedCategories.includes("Treadmill")}
+            checked={selectedCategory === "Treadmill"}
           />
           Treadmill
         </label>
@@ -131,7 +130,7 @@ const CategoriesCard = () => {
             type="checkbox"
             value="Benches"
             className="mr-2"
-            checked={selectedCategories.includes("Benches")}
+            checked={selectedCategory === "Benches"}
           />
           Benches
         </label>

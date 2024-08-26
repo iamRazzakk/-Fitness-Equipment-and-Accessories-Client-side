@@ -2,11 +2,10 @@ import { useDispatch } from "react-redux";
 import barbell from "../../assets/barbell.png";
 import benches from "../../assets/benches.jpg";
 import treadmill from "../../assets/treadmill.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { setSelectedCategory } from "@/redux/features/categoriesSlice";
 const Categories = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const AllCategories = [
     {
       name: "Barbell",
@@ -31,7 +30,7 @@ const Categories = () => {
         {AllCategories?.map((category, idx) => (
           <Link
             key={idx}
-            to={`/products`}
+            to={`/products?name=${encodeURIComponent(category.name)}`}
             onClick={() => handleCategoryClick(category.name)}
           >
             <div
