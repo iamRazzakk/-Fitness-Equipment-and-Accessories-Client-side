@@ -1,6 +1,17 @@
 import { useState } from "react";
 import { useGetProductsQuery } from "@/redux/api/baseApi";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
   Table,
   TableBody,
   TableCaption,
@@ -24,11 +35,14 @@ import {
 
 const ProductsManagements = () => {
   const { data: Products, isLoading } = useGetProductsQuery([]);
-
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [minPrice, setMinPrice] = useState<number | null>(null);
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
   const [sortOrder, setSortOrder] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState<IProducts | null>(
+    null
+  );
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -77,6 +91,24 @@ const ProductsManagements = () => {
       }
     }
   );
+
+  // Handle delete action
+  const handleDeleteProduct = (product: IProducts) => {
+    setProductToDelete(product);
+    setIsModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    // Handle the deletion of the product here
+    // Example: dispatch(deleteProduct(productToDelete._id));
+    setIsModalOpen(false);
+    setProductToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setIsModalOpen(false);
+    setProductToDelete(null);
+  };
 
   return (
     <div className="p-4 rounded-lg shadow-md">
@@ -182,13 +214,38 @@ const ProductsManagements = () => {
                 {format(new Date(product.updatedAt), "MMM dd, yyyy")}
               </TableCell>
               <TableCell className="font-medium">
-                <MdDelete className="mb-2 text-2xl" />
+                <MdDelete
+                  onClick={() => handleDeleteProduct(product)}
+                  className="mb-2 text-2xl cursor-pointer"
+                />
                 <RxUpdate className="text-2xl" />
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+
+      {/* Alert Dialog for Confirming Delete */}
+      {isModalOpen && (
+        <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={cancelDelete}>
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction onClick={confirmDelete}>
+                Continue
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
     </div>
   );
 };
