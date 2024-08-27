@@ -4,7 +4,15 @@ import img2 from "../../assets/about/2.jpg";
 import img3 from "../../assets/about/3.jpg";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import AOS from "aos";
+import "aos/dist/aos.css";
 const AboutUs = () => {
+  AOS.init({
+    offset: 120,
+    duration: 1200,
+    easing: "ease",
+    delay: 50,
+  });
   return (
     <div>
       <h1 className="lg:text-5xl md:text-3xl text-xl font-bold ">
@@ -81,7 +89,10 @@ const AboutUs = () => {
           Meet our Team
         </h1>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 lg:mt-8 md:mt-6 mt-4">
-          <div className="lg:p-4 md:p-3 p-2 border rounded-md shadow-md shadow-white">
+          <div
+            className="lg:p-4 md:p-3 p-2 border rounded-md shadow-md shadow-white"
+            data-aos="flip-right"
+          >
             <img className="rounded-md" src={img1} alt="" />
             <div className="text-center mt-3">
               <h1 className="text-xl font-bold text-center">Discover.</h1>
@@ -92,7 +103,10 @@ const AboutUs = () => {
               </p>
             </div>
           </div>
-          <div className="lg:p-4 md:p-3 p-2 border rounded-md shadow-md shadow-white">
+          <div
+            className="lg:p-4 md:p-3 p-2 border rounded-md shadow-md shadow-white"
+            data-aos="flip-right"
+          >
             <img className="rounded-md" src={img2} alt="" />
             <div className="text-center mt-3">
               <h1 className="text-xl font-bold text-center">Design.</h1>
@@ -103,7 +117,10 @@ const AboutUs = () => {
               </p>
             </div>
           </div>
-          <div className="lg:p-4 md:p-3 p-2 border rounded-md shadow-md shadow-white">
+          <div
+            className="lg:p-4 md:p-3 p-2 border rounded-md shadow-md shadow-white"
+            data-aos="flip-right"
+          >
             <img className="rounded-md" src={img3} alt="" />
             <div className="text-center mt-3">
               <h1 className="text-xl font-bold text-center">Deliver.</h1>

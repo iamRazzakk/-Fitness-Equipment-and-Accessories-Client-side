@@ -7,10 +7,17 @@ import { Scrollbar } from "swiper/modules";
 import { useGetProductsQuery } from "@/redux/api/baseApi";
 import { IProducts } from "@/types/types";
 import { Link } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const FeaturedProducts = () => {
   const { data: Products, isLoading } = useGetProductsQuery([]);
-
+  AOS.init({
+    offset: 120,
+    duration: 1200,
+    easing: "ease",
+    delay: 50,
+  });
   if (isLoading) {
     return <h1>Loading</h1>;
   }
@@ -26,19 +33,19 @@ const FeaturedProducts = () => {
         spaceBetween={10}
         breakpoints={{
           640: {
-            slidesPerView: 1, // 1 slide per view on mobile devices
+            slidesPerView: 1,
             spaceBetween: 20,
           },
           768: {
-            slidesPerView: 2, // 2 slides per view on tablets
+            slidesPerView: 2,
             spaceBetween: 30,
           },
           1024: {
-            slidesPerView: 3, // 3 slides per view on small laptops
+            slidesPerView: 3,
             spaceBetween: 40,
           },
           1280: {
-            slidesPerView: 4, // 4 slides per view on larger screens (lg and above)
+            slidesPerView: 4,
             spaceBetween: 50,
           },
         }}
@@ -50,6 +57,7 @@ const FeaturedProducts = () => {
       >
         {Products?.data?.slice(0, 8).map((product: IProducts) => (
           <SwiperSlide
+            data-aos="zoom-in"
             key={product._id}
             className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden img-container"
           >

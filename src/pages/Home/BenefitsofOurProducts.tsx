@@ -2,7 +2,8 @@ import image1 from "../../assets/benefit/1.jpg";
 import image2 from "../../assets/benefit/2.jpg";
 import image3 from "../../assets/benefit/3.jpg";
 import image4 from "../../assets/benefit/4.jpg";
-
+import AOS from "aos";
+import "aos/dist/aos.css";
 const benefits = [
   {
     title: "High Quality",
@@ -28,14 +29,21 @@ const benefits = [
 ];
 
 const BenefitsofOurProducts = () => {
+  AOS.init({
+    offset: 120,
+    duration: 1200,
+    easing: "ease",
+    delay: 50,
+  });
   return (
-    <div className="py-8 ">
+    <div className="py-8 lg:mt-12 md:mt-8 mt-4">
       <h2 className="lg:text-3xl md:text-2xl text-xl font-bold  text-white mb-6">
         Benefits of Our Products
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
         {benefits.map((benefit, idx) => (
           <div
+            data-aos="flip-right"
             key={idx}
             className="p-4 bg-white rounded-lg shadow-md text-center bg-cover bg-center h-64 flex flex-col justify-center items-center "
             style={{ backgroundImage: `url(${benefit.backgroundImage})` }}

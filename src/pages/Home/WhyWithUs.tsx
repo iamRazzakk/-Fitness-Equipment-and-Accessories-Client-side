@@ -3,24 +3,35 @@ import img2 from "../../assets/whywhitus/car.png";
 import img3 from "../../assets/whywhitus/ait.png";
 import img4 from "../../assets/whywhitus/mess.png";
 import img5 from "../../assets/whywhitus/sec.png";
-
+import AOS from "aos";
+import "aos/dist/aos.css";
 const WhyWithUs = () => {
+  AOS.init({
+    offset: 120,
+    duration: 1200,
+    easing: "ease",
+    delay: 50,
+  });
   return (
     <div className="lg:mt-32 md:mt-12 mt-8 flex flex-col lg:flex-row items-center">
       <div className="flex-1 hover:shadow-lg hover:shadow-gray-400 rounded-lg">
         <img
+          data-aos="fade-left"
           src={img}
           alt="Why With Us"
           className="rounded-lg hover:rounded-md object-cover"
         />
       </div>
       <div className="flex-1 space-y-6 mt-8 lg:mt-0 lg:ml-12">
-        <div className="flex items-center gap-6 p-3  rounded-lg shadow-lg">
+        <div
+          data-aos="fade-right"
+          className="flex items-center gap-6 p-3  rounded-lg shadow-lg"
+        >
           <div className="border-2 border-gray-400 rounded-full p-5 icons  ">
             <img src={img2} alt="Fast Delivery" className=" " />
           </div>
 
-          <div>
+          <div data-aos="fade-right">
             <h3 className="lg:text-xl text-base font-semibold text-white withUs">
               Fast Delivery
             </h3>
@@ -30,7 +41,10 @@ const WhyWithUs = () => {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-6 p-3  rounded-lg shadow-lg">
+        <div
+          data-aos="fade-right"
+          className="flex items-center gap-6 p-3  rounded-lg shadow-lg"
+        >
           <div className="border-2 border-gray-400 rounded-full p-5 icons  ">
             <img
               src={img3}
@@ -38,7 +52,7 @@ const WhyWithUs = () => {
               className="  object-cover w-full h-full text-black "
             />
           </div>
-          <div>
+          <div data-aos="fade-right">
             <h3 className="lg:text-xl text-base font-semibold text-white withUs">
               Shipping Worldwide
             </h3>
@@ -48,7 +62,10 @@ const WhyWithUs = () => {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-6 p-3  rounded-lg shadow-lg">
+        <div
+          data-aos="fade-right"
+          className="flex items-center gap-6 p-3  rounded-lg shadow-lg"
+        >
           <div className="border-2 border-gray-400 rounded-full p-5 icons  ">
             <img
               src={img5}
@@ -57,7 +74,7 @@ const WhyWithUs = () => {
             />
           </div>
 
-          <div>
+          <div data-aos="fade-right">
             <h3 className="lg:text-xl text-base font-semibold text-white withUs">
               Secure Payments
             </h3>
@@ -67,7 +84,10 @@ const WhyWithUs = () => {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-6 p-3  rounded-lg shadow-lg">
+        <div
+          data-aos="fade-right"
+          className="flex items-center gap-6 p-3  rounded-lg shadow-lg"
+        >
           <div className="border-2 border-gray-400 rounded-full p-5 icons  ">
             <img
               src={img4}

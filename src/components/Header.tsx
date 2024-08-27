@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <div className="slide-container h-[88vh]">
       <img
-        className="lg:w-full lg:h-full object-cover relative"
+        className="lg:w-full lg:h-full object-cover relative rounded-md"
         src={img}
         alt=""
       />

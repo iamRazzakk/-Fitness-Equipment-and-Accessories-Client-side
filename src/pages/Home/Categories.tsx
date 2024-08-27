@@ -4,6 +4,8 @@ import benches from "../../assets/benches.jpg";
 import treadmill from "../../assets/treadmill.png";
 import { Link } from "react-router-dom";
 import { setSelectedCategory } from "@/redux/features/categoriesSlice";
+import AOS from "aos";
+import "aos/dist/aos.css";
 const Categories = () => {
   const dispatch = useDispatch();
   const AllCategories = [
@@ -23,10 +25,19 @@ const Categories = () => {
   const handleCategoryClick = (categoryName) => {
     dispatch(setSelectedCategory(categoryName));
   };
+  AOS.init({
+    offset: 120,
+    duration: 1200,
+    easing: "ease",
+    delay: 50,
+  });
   return (
     <div className="lg:mt-12 md:mt-8 mt-4">
       <h1 className="lg:text-3xl md:text-2xl text-xl font-bold">Categories</h1>
-      <div className="grid grid-cols-3 gap-6 text-center lg:mt-8 md:mt-6 mt-4">
+      <div
+        data-aos="flip-down"
+        className="grid grid-cols-3 gap-6 text-center lg:mt-8 md:mt-6 mt-4"
+      >
         {AllCategories?.map((category, idx) => (
           <Link
             key={idx}
