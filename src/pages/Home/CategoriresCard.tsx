@@ -77,25 +77,25 @@ const CategoriesCard = () => {
 
   return (
     <div>
-      <div>
+      <div className="lg:mt-0 mt-4">
         <img
-          className="relative w-full lg:h-96 object-cover"
+          className="relative w-full lg:h-96 md:h-64 h-[60vh] object-cover"
           src={headerImg}
           alt=""
         />
         <Link
           to="/products"
-          className="absolute lg:-mt-64 lg:text-5xl font-bold text-center lg:ml-[450px]"
+          className="absolute lg:-mt-64 -mt-32 ml-32 lg:text-5xl font-bold text-center lg:ml-[450px]"
         >
           /products
         </Link>
       </div>
-      <div>
+      <div className="flex">
         <NavLink to="/">Home </NavLink>/
         <NavLink to="/products"> products</NavLink>
       </div>
 
-      <div className="lg:mt-8 flex items-center gap-4">
+      <div className="lg:mt-8 md:mt-6 flex items-center gap-4">
         <label className="flex items-center">
           <input
             onChange={() => handleCategoryChange("Barbell")}
@@ -128,10 +128,10 @@ const CategoriesCard = () => {
         </label>
       </div>
 
-      <div className="lg:mt-4">
-        <div className="lg:flex items-center justify-start gap-4">
+      <div className="lg:mt-4 md:mt-3">
+        <div className="lg:flex items-center justify-start gap-4 ">
           <Input
-            className="flex-1 text-black"
+            className="flex-1 text-black lg:mb-0 mb-4"
             type="number"
             id="minPrice"
             placeholder="Min Price"
@@ -139,14 +139,14 @@ const CategoriesCard = () => {
             onChange={(e) => setMinPrice(Number(e.target.value))}
           />
           <Input
-            className="flex-1 text-black"
+            className="flex-1 text-black lg:mb-0 mb-4"
             type="number"
             id="maxPrice"
             placeholder="Max Price"
             value={maxPrice !== null ? maxPrice : ""}
             onChange={(e) => setMaxPrice(Number(e.target.value))}
           />
-          <div className="flex-1">
+          <div className="flex-1 lg:mb-0 mb-4">
             <DropdownMenu>
               <DropdownMenuTrigger className="border px-4 py-[6px] rounded-md">
                 Sort the Products
@@ -163,7 +163,7 @@ const CategoriesCard = () => {
           </div>
         </div>
         <Button
-          className="lg:mt-4"
+          className="lg:mt-4 lg:mb-0 mb-4"
           onClick={handleClearFilters}
           variant="secondary"
         >
@@ -172,7 +172,7 @@ const CategoriesCard = () => {
         <SearchBar />
       </div>
 
-      <div className="lg:mt-12 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 text-white">
+      <div className="lg:mt-12 md:mt-8 mt-4 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 text-white">
         {sortedProducts?.map((product: IProducts) => (
           <div
             key={product._id}

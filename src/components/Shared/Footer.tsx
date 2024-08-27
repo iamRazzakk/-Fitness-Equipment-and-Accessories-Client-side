@@ -25,7 +25,9 @@ const Footer = () => {
         {/* Second Section */}
         <div>
           <ul>
-            <li className="text-xl font-bold mb-4">Order & Deliveries</li>
+            <li className="lg:text-xl text-xl font-bold mb-4">
+              Order & Deliveries
+            </li>
             <li className="text-gray-400 cursor-pointer hover:underline">
               Shipping
             </li>
@@ -47,7 +49,9 @@ const Footer = () => {
         {/* Third Section */}
         <div>
           <ul>
-            <li className="text-xl font-bold mb-4">Terms & Conditions</li>
+            <li className="lg:text-xl text-xl font-bold mb-4">
+              Terms & Conditions
+            </li>
             <li className="text-gray-400 cursor-pointer hover:underline">
               About Us
             </li>
@@ -66,7 +70,9 @@ const Footer = () => {
         {/* Fourth Section */}
         <div>
           <ul>
-            <li className="text-xl font-bold mb-4">Customer Support</li>
+            <li className="lg:text-xl text-xl font-bold mb-4">
+              Customer Support
+            </li>
             <li className="text-gray-400 cursor-pointer hover:underline">
               Contact Us
             </li>

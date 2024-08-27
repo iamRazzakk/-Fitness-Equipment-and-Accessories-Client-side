@@ -21,7 +21,7 @@ const WhyWithUs = () => {
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold text-white withUs">
+            <h3 className="lg:text-xl text-base font-semibold text-white withUs">
               Fast Delivery
             </h3>
             <p className="text-gray-400">
@@ -39,7 +39,7 @@ const WhyWithUs = () => {
             />
           </div>
           <div>
-            <h3 className="text-xl font-semibold text-white withUs">
+            <h3 className="lg:text-xl text-base font-semibold text-white withUs">
               Shipping Worldwide
             </h3>
             <p className="text-gray-400">
@@ -58,7 +58,7 @@ const WhyWithUs = () => {
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold text-white withUs">
+            <h3 className="lg:text-xl text-base font-semibold text-white withUs">
               Secure Payments
             </h3>
             <p className="text-gray-400">
@@ -77,7 +77,7 @@ const WhyWithUs = () => {
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold text-white withUs">
+            <h3 className="lg:text-xl text-base font-semibold text-white withUs">
               Online Support
             </h3>
             <p className="text-gray-400">

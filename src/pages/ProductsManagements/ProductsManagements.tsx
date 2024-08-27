@@ -206,20 +206,20 @@ const ProductsManagements = () => {
             </label>
           </div>
 
-          <div className="flex gap-4">
+          <div className="lg:flex gap-4">
             <Input
               type="number"
               placeholder="Min Price"
               value={minPrice !== null ? minPrice : ""}
               onChange={(e) => setMinPrice(Number(e.target.value))}
-              className="w-32"
+              className="lg:w-32 w-full lg:mb-0 mb-4"
             />
             <Input
               type="number"
               placeholder="Max Price"
               value={maxPrice !== null ? maxPrice : ""}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
-              className="w-32"
+              className="lg:w-32 w-full lg:mb-0 mb-4"
             />
             <DropdownMenu>
               <DropdownMenuTrigger className="border px-4 py-2 rounded-md">

@@ -86,15 +86,15 @@ const Cart = () => {
             </div>
           )}
         </div>
-        <div className=" flex-1 p-4">
-          <div className="mt-4">
+        <div className=" flex-1 p-4 ">
+          <div className="mt-4 lg:space-y-8 space-y-4">
             <h3 className="text-xl font-semibold">Summary:</h3>
             <p className="text-lg">Total Items: {selectedItems}</p>
             <p className="text-xl font-semibold">
               Total Price: ${totalPrice.toFixed(2)}
             </p>
           </div>
-          <Button disabled={!hasProducts}>
+          <Button className="lg:mt-[32px] mt-4" disabled={!hasProducts}>
             <Link to="/checkout">
               {hasProducts ? "Check out" : "No items to check out"}
             </Link>

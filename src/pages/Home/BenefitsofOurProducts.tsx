@@ -30,7 +30,7 @@ const benefits = [
 const BenefitsofOurProducts = () => {
   return (
     <div className="py-8 ">
-      <h2 className="text-3xl font-bold  text-white mb-6">
+      <h2 className="lg:text-3xl md:text-2xl text-xl font-bold  text-white mb-6">
         Benefits of Our Products
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">

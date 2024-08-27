@@ -24,9 +24,9 @@ const Categories = () => {
     dispatch(setSelectedCategory(categoryName));
   };
   return (
-    <div className="lg:mt-12">
-      <h1 className="text-3xl font-bold">Categories</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center lg:mt-8 md:mt-6 mt-4">
+    <div className="lg:mt-12 md:mt-8 mt-4">
+      <h1 className="lg:text-3xl md:text-2xl text-xl font-bold">Categories</h1>
+      <div className="grid grid-cols-3 gap-6 text-center lg:mt-8 md:mt-6 mt-4">
         {AllCategories?.map((category, idx) => (
           <Link
             key={idx}
@@ -40,9 +40,9 @@ const Categories = () => {
               <img
                 src={category?.img}
                 alt={category?.name}
-                className="lg:h-48 lg:w-48 rounded-full object-cover border border-gray-500 p-2"
+                className="lg:h-48 lg:w-48 w-16 rounded-full object-cover border border-gray-500 p-2"
               />
-              <h3 className="text-xl font-semibold lg:mt-5 md:mt-4 mt-2">
+              <h3 className="lg:text-xl text-base font-semibold lg:mt-5 md:mt-4 mt-2">
                 {category?.name}
               </h3>
             </div>

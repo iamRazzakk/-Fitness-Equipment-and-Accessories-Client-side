@@ -17,22 +17,28 @@ const FeaturedProducts = () => {
 
   return (
     <div className="lg:mt-32 md:mt-12 mt-8">
-      <h1 className="text-3xl font-bold">Featured Products</h1>
+      <h1 className="lg:text-3xl md:text-2xl text-xl font-bold">
+        Featured Products
+      </h1>
       {/* Product card */}
       <Swiper
-        slidesPerView={4}
-        spaceBetween={15}
+        slidesPerView={1}
+        spaceBetween={10}
         breakpoints={{
           640: {
-            slidesPerView: 2,
+            slidesPerView: 1, // 1 slide per view on mobile devices
             spaceBetween: 20,
           },
           768: {
-            slidesPerView: 3,
-            spaceBetween: 40,
+            slidesPerView: 2, // 2 slides per view on tablets
+            spaceBetween: 30,
           },
           1024: {
-            slidesPerView: 4,
+            slidesPerView: 3, // 3 slides per view on small laptops
+            spaceBetween: 40,
+          },
+          1280: {
+            slidesPerView: 4, // 4 slides per view on larger screens (lg and above)
             spaceBetween: 50,
           },
         }}
@@ -55,7 +61,7 @@ const FeaturedProducts = () => {
               />
             </div>
             <div className="p-6">
-              <h2 className="text-xl font-bold text-gray-800">
+              <h2 className="lg:text-xl text-base font-bold text-gray-800">
                 {product.name}
               </h2>
               <p className="mt-2 text-gray-600">{product.description}</p>

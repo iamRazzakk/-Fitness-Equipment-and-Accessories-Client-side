@@ -7,7 +7,7 @@ import img5 from "../../assets/gallery/5.jpg";
 const ImageGallery = () => {
   return (
     <div className="lg:mt-32 md:mt-12 mt-8">
-      <h1 className="text-3xl font-semibold">Gallery</h1>
+      <h1 className="lg:text-3xl md:text-2xl text-xl font-semibold">Gallery</h1>
       <div className="lg:flex items-center lg:gap-4 lg:mt-8 md:mt-6 mt-4">
         <div>
           <img className="lg:w-full galleyImg rounded-md " src={img1} alt="" />
