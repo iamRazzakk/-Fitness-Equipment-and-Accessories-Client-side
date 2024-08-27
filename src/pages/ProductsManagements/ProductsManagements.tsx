@@ -23,7 +23,6 @@ import {
 import { MdDelete } from "react-icons/md";
 import { RxUpdate } from "react-icons/rx";
 import { format } from "date-fns";
-import { IProducts } from "@/types/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,35 +31,40 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const ProductsManagements = () => {
-  const { data: Products, isLoading } = useGetProductsQuery([]);
+  const { data: Products, isLoading } = useGetProductsQuery([] as any);
   const [updateSingleProduct, { isLoading: isUpdating }] =
     useUpdateSingleProductsMutation();
   const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
   const [addProduct, { isLoading: isAdding }] = useAddProductMutation();
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [minPrice, setMinPrice] = useState<number | null>(null);
-  const [maxPrice, setMaxPrice] = useState<number | null>(null);
-  const [sortOrder, setSortOrder] = useState<string | null>(null);
-  const [productToUpdate, setProductToUpdate] = useState<IProducts | null>(
-    null
-  );
+  const [selectedCategories, setSelectedCategories] = useState<any[]>([]);
+  const [minPrice, setMinPrice] = useState<any>(null);
+  const [maxPrice, setMaxPrice] = useState<any>(null);
+  const [sortOrder, setSortOrder] = useState<any>(null);
+  const [productToUpdate, setProductToUpdate] = useState<any>(null);
   const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [productToDelete, setProductToDelete] = useState<IProducts | null>(
-    null
-  );
+  const [productToDelete, setProductToDelete] = useState<any>(null);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   if (isLoading) {
     return <p>Loading...</p>;
   }
 
   const handleCategoryChange = (category: string) => {
-    setSelectedCategories((prevSelectedCategories) => {
+    setSelectedCategories((prevSelectedCategories: any) => {
       if (prevSelectedCategories.includes(category)) {
-        return prevSelectedCategories.filter((cat) => cat !== category);
+        return prevSelectedCategories.filter((cat: any) => cat !== category);
       } else {
         return [...prevSelectedCategories, category];
       }
@@ -74,7 +78,7 @@ const ProductsManagements = () => {
     setSortOrder(null);
   };
 
-  const filteredProducts = Products?.data?.filter((product: IProducts) => {
+  const filteredProducts = Products?.data?.filter((product: any) => {
     const categoryMatch =
       selectedCategories.length === 0 ||
       selectedCategories.includes(product.category);
@@ -84,17 +88,15 @@ const ProductsManagements = () => {
     return categoryMatch && priceMatch;
   });
 
-  const sortedProducts = filteredProducts?.sort(
-    (a: IProducts, b: IProducts) => {
-      if (sortOrder === "asc") {
-        return a.price - b.price;
-      } else if (sortOrder === "desc") {
-        return b.price - a.price;
-      } else {
-        return 0;
-      }
+  const sortedProducts = filteredProducts?.sort((a: any, b: any) => {
+    if (sortOrder === "asc") {
+      return a.price - b.price;
+    } else if (sortOrder === "desc") {
+      return b.price - a.price;
+    } else {
+      return 0;
     }
-  );
+  });
 
   const handleDeleteProduct = async () => {
     if (productToDelete) {
@@ -103,18 +105,18 @@ const ProductsManagements = () => {
         console.log("Product deleted successfully");
         setDeleteDialogOpen(false);
         setProductToDelete(null);
-      } catch (error) {
+      } catch (error: any) {
         console.error("Something went wrong. Product not deleted", error);
       }
     }
   };
 
-  const handleUpdateProduct = (product: IProducts) => {
+  const handleUpdateProduct = (product: any) => {
     setProductToUpdate(product);
     setUpdateDialogOpen(true);
   };
 
-  const handleUpData = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpData = async (e: any) => {
     e.preventDefault();
     if (productToUpdate) {
       const form = e.target;
@@ -130,7 +132,7 @@ const ProductsManagements = () => {
         }).unwrap();
         setUpdateDialogOpen(false);
         setProductToUpdate(null);
-      } catch (error) {
+      } catch (error: any) {
         console.error("Failed to update product: ", error);
       }
     }
@@ -140,8 +142,10 @@ const ProductsManagements = () => {
     setAddDialogOpen(true);
   };
 
-  const handleAddProduct = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddProduct = async (e: any) => {
     e.preventDefault();
+
+    // Extracting form data
     const form = e.target;
     const name = form.name.value;
     const description = form.description.value;
@@ -150,24 +154,32 @@ const ProductsManagements = () => {
     const category = form.category.value;
     const images = form.images.value;
 
-    try {
-      await addProduct({
-        name,
-        description,
-        price,
-        stock,
-        category,
-        images,
-      }).unwrap();
+    // Creating an object to hold the data
+    const productData = {
+      name,
+      description,
+      price,
+      stock,
+      category,
+      images,
+    };
 
+    // Logging the full product data to the console
+    console.log("Product Data:", productData);
+
+    try {
+      // Sending the product data to the addProduct function
+      await addProduct(productData).unwrap();
+
+      // Closing the dialog on successful addition
       setAddDialogOpen(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to add product: ", error);
     }
   };
 
   return (
-    <div className="p-4 rounded-lg shadow-md">
+    <div className="p-4 rounded-lg shadow-md lg:mt-12 md:mt-8 mt-4">
       <h1 className="text-3xl font-bold mb-4">
         Product List ({Products?.data.length})
       </h1>
@@ -239,7 +251,9 @@ const ProductsManagements = () => {
           <Button onClick={handleClearFilters} variant="secondary">
             Clear Filters
           </Button>
-          <Button onClick={handleAddNewProduct}>Create New Product</Button>
+          <Button className="bg-white text-black" onClick={handleAddNewProduct}>
+            Create New Product
+          </Button>
         </div>
       </div>
 
@@ -256,38 +270,30 @@ const ProductsManagements = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {sortedProducts?.map((product: IProducts) => (
+          {sortedProducts?.map((product: any) => (
             <TableRow key={product._id}>
               <TableCell className="font-medium">{product.name}</TableCell>
               <TableCell>${product.price.toFixed(2)}</TableCell>
               <TableCell>{product.category}</TableCell>
               <TableCell>
-                {format(new Date(product.createdAt), "MMM dd, yyyy")}
+                {format(new Date(product?.createdAt), "MMM dd, yyyy")}
               </TableCell>
               <TableCell>
-                {format(new Date(product.updatedAt), "MMM dd, yyyy")}
+                {format(new Date(product?.updatedAt), "MMM dd, yyyy")}
               </TableCell>
               <TableCell>
-                <div className="flex items-center space-x-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
+                <div className="flex gap-4">
+                  <RxUpdate
                     onClick={() => handleUpdateProduct(product)}
-                    disabled={isUpdating}
-                  >
-                    <RxUpdate size={20} />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
+                    className="text-xl cursor-pointer"
+                  />
+                  <MdDelete
                     onClick={() => {
                       setProductToDelete(product);
                       setDeleteDialogOpen(true);
                     }}
-                    disabled={isDeleting}
-                  >
-                    <MdDelete size={20} className="text-red-500" />
-                  </Button>
+                    className="text-xl cursor-pointer"
+                  />
                 </div>
               </TableCell>
             </TableRow>
@@ -295,103 +301,125 @@ const ProductsManagements = () => {
         </TableBody>
       </Table>
 
-      <Dialog
-        open={updateDialogOpen}
-        onOpenChange={() => setUpdateDialogOpen(!updateDialogOpen)}
-      >
+      {/* Update Dialog */}
+      <Dialog open={updateDialogOpen} onOpenChange={setUpdateDialogOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Update Product</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleUpData}>
             <Input
-              type="text"
               name="name"
-              placeholder="Product Name"
               defaultValue={productToUpdate?.name}
-              required
+              placeholder="Product Name"
+              className="mb-4"
             />
             <Input
-              type="text"
               name="description"
-              placeholder="Description"
               defaultValue={productToUpdate?.description}
-              required
+              placeholder="Product Description"
+              className="mb-4"
             />
             <Input
-              type="number"
               name="price"
-              placeholder="Price"
+              type="number"
               defaultValue={productToUpdate?.price}
-              required
+              placeholder="Product Price"
+              className="mb-4"
             />
             <Input
-              type="number"
               name="stock"
-              placeholder="Stock"
+              type="number"
               defaultValue={productToUpdate?.stock}
-              required
+              placeholder="Stock"
+              className="mb-4"
             />
-            <Button type="submit" disabled={isUpdating}>
-              Update
+            <Button
+              type="submit"
+              className="bg-black text-white"
+              disabled={isUpdating}
+            >
+              Update Product
             </Button>
           </form>
         </DialogContent>
       </Dialog>
 
-      <Dialog
-        open={addDialogOpen}
-        onOpenChange={() => setAddDialogOpen(!addDialogOpen)}
-      >
+      {/* Add Product Dialog */}
+      <Dialog open={addDialogOpen} onOpenChange={setAddDialogOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Add New Product</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleAddProduct}>
+            <Input name="name" placeholder="Product Name" className="mb-4" />
             <Input
-              type="text"
-              name="name"
-              placeholder="Product Name"
-              required
-            />
-            <Input
-              type="text"
               name="description"
-              placeholder="Description"
-              required
+              placeholder="Product Description"
+              className="mb-4"
             />
-            <Input type="number" name="price" placeholder="Price" required />
-            <Input type="number" name="stock" placeholder="Stock" required />
             <Input
-              type="text"
-              name="category"
-              placeholder="Category"
-              required
+              name="price"
+              type="number"
+              placeholder="Product Price"
+              className="mb-4"
             />
-            <Input type="text" name="images" placeholder="IMGBB URL" required />
-            <Button type="submit" disabled={isAdding}>
+            <Input
+              name="stock"
+              type="number"
+              placeholder="Stock"
+              className="mb-4"
+            />
+            <Select
+              name="category"
+              value={selectedCategory}
+              onValueChange={(value) => setSelectedCategory(value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select a Category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="Barbell">Barbell</SelectItem>
+                  <SelectItem value="Treadmill">Treadmill</SelectItem>
+                  <SelectItem value="Benches">Benches</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Input
+              name="images"
+              placeholder="Product Image URL"
+              className="mb-4 mt-4"
+            />
+            <Button
+              className="bg-black text-white"
+              type="submit"
+              disabled={isAdding}
+            >
               Add Product
             </Button>
           </form>
         </DialogContent>
       </Dialog>
 
-      <Dialog
-        open={deleteDialogOpen}
-        onOpenChange={() => setDeleteDialogOpen(!deleteDialogOpen)}
-      >
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Delete Product</DialogTitle>
           </DialogHeader>
           <p>Are you sure you want to delete this product?</p>
-          <Button
-            variant="destructive"
-            onClick={handleDeleteProduct}
-            disabled={isDeleting}
-          >
-            Delete
-          </Button>
+          <div className="flex justify-end gap-4 mt-4">
+            <Button
+              onClick={() => setDeleteDialogOpen(false)}
+              variant="secondary"
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleDeleteProduct} variant="destructive">
+              Delete
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

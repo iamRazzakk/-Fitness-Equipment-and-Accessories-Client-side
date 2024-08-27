@@ -52,7 +52,12 @@ const Cart = () => {
         <div className="flex-1  p-4">
           <h3 className="text-xl font-semibold mb-4">Your Cart Items:</h3>
           {products.length === 0 ? (
-            <p>Your cart is empty.</p>
+            <div>
+              <h1>Your Cart is empty</h1>
+              <Link to="/products">
+                <Button className="bg-white text-black mt-4">Shop Now</Button>
+              </Link>
+            </div>
           ) : (
             <div>
               {products.map((product) => (
@@ -76,7 +81,10 @@ const Cart = () => {
                         className="text-3xl cursor-pointer hover:bg-white hover:text-black rounded-full"
                       />
 
-                      <Button onClick={() => handleRemoveItem(product._id)}>
+                      <Button
+                        className="bg-white text-black"
+                        onClick={() => handleRemoveItem(product._id)}
+                      >
                         Remove
                       </Button>
                     </div>
@@ -94,7 +102,10 @@ const Cart = () => {
               Total Price: ${totalPrice.toFixed(2)}
             </p>
           </div>
-          <Button className="lg:mt-[32px] mt-4" disabled={!hasProducts}>
+          <Button
+            className="lg:mt-[32px] mt-4 bg-white text-black"
+            disabled={!hasProducts}
+          >
             <Link to="/checkout">
               {hasProducts ? "Check out" : "No items to check out"}
             </Link>

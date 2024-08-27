@@ -22,7 +22,7 @@ const Categories = () => {
       img: treadmill,
     },
   ];
-  const handleCategoryClick = (categoryName) => {
+  const handleCategoryClick = (categoryName: any) => {
     dispatch(setSelectedCategory(categoryName));
   };
   AOS.init({

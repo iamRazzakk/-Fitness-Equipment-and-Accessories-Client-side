@@ -5,13 +5,22 @@ import { useAppDispatch } from "@/redux/hook";
 import { cddToCart } from "@/redux/features/cartSlice";
 import { toast } from "sonner";
 import { IProducts } from "@/types/types";
+import BeatLoader from "react-spinners/ClipLoader";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { data: response, error, isLoading } = useGetSingleProductsQuery(id);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <BeatLoader
+        className="flex items-center justify-center"
+        color="#ffffff"
+        size={30}
+        speedMultiplier={5}
+      />
+    );
   if (error) return <div>Error </div>;
 
   const handleAddToCart = (product: IProducts) => {
@@ -31,7 +40,7 @@ const ProductDetails = () => {
       <div className="flex flex-col lg:flex-row">
         <div className="lg:w-1/2">
           <img
-            className="w-full h-96 object-cover rounded"
+            className="w-full h-96 object-cover rounded border-gray-400"
             src={product.images}
             alt={product.name}
           />

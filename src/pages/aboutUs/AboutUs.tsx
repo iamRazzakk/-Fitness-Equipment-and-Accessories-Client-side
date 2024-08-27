@@ -14,7 +14,7 @@ const AboutUs = () => {
     delay: 50,
   });
   return (
-    <div>
+    <div className="lg:mt-12 md:mt-8 mt-4">
       <h1 className="lg:text-5xl md:text-3xl text-xl font-bold ">
         Company Overview
       </h1>

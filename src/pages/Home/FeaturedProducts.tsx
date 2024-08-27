@@ -9,6 +9,7 @@ import { IProducts } from "@/types/types";
 import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import BeatLoader from "react-spinners/ClipLoader";
 
 const FeaturedProducts = () => {
   const { data: Products, isLoading } = useGetProductsQuery([]);
@@ -19,7 +20,14 @@ const FeaturedProducts = () => {
     delay: 50,
   });
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return (
+      <BeatLoader
+        className="flex items-center justify-center"
+        color="#ffffff"
+        size={30}
+        speedMultiplier={5}
+      />
+    );
   }
 
   return (
@@ -75,7 +83,7 @@ const FeaturedProducts = () => {
               <p className="mt-2 text-gray-600">{product.description}</p>
               <div className="mt-4 flex items-start justify-between">
                 <Link to={"/products"}>
-                  <Button>See More</Button>
+                  <Button className="bg-black text-white">See More</Button>
                 </Link>
                 <h1 className="text-black">${product.price}</h1>
               </div>

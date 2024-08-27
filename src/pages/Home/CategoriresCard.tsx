@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useGetProductsQuery } from "@/redux/api/baseApi";
 import headerImg from "../../assets/aboutUs/products.jpg";
 import { Link, NavLink } from "react-router-dom";
 import { IProducts } from "@/types/types";
 import { useAppDispatch } from "../../redux/hook";
-import { cddToCart } from "@/redux/features/cartSlice";
-import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
@@ -15,32 +13,45 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import { setSelectedCategory } from "@/redux/features/categoriesSlice";
-import SearchBar from "@/components/searchBar/SearchBar";
+import { RootState } from "@/redux/store";
+import { setSearchState } from "@/redux/features/searchSlice";
+import useDebounce from "@/hook/useDebounce";
+import BeatLoader from "react-spinners/ClipLoader";
 
 const CategoriesCard = () => {
   const { data: Products, isLoading } = useGetProductsQuery([]);
   const dispatch = useAppDispatch();
 
+  // Access state from Redux store
   const selectedCategory = useSelector(
     (state: RootState) => state.category.selectedCategory
   );
   const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
 
+  // Local state for sorting and price filters
   const [sortOrder, setSortOrder] = useState<string | null>(null);
   const [minPrice, setMinPrice] = useState<number | null>(null);
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
+  const [localSearchTerm, setLocalSearchTerm] = useState<string>("");
+
+  // Debounced search term
+  const debouncedSearchTerm = useDebounce(localSearchTerm, 300);
+
+  useEffect(() => {
+    dispatch(setSearchState(debouncedSearchTerm));
+  }, [debouncedSearchTerm, dispatch]);
 
   if (isLoading) {
-    return <h1 className="text-white">Loading</h1>;
+    return (
+      <BeatLoader
+        className="flex items-center justify-center"
+        color="#ffffff"
+        size={30}
+        speedMultiplier={5}
+      />
+    );
   }
-
-  const handleAddToCart = (product: IProducts) => {
-    const quantity = 1;
-    dispatch(cddToCart({ product, quantity }));
-    toast.success(`${product.name} has been added to your cart!`);
-  };
 
   const handleCategoryChange = (category: string) => {
     dispatch(setSelectedCategory(category));
@@ -51,16 +62,23 @@ const CategoriesCard = () => {
     setMaxPrice(null);
     setSortOrder(null);
     dispatch(setSelectedCategory(null));
+    dispatch(setSearchState(""));
+    setLocalSearchTerm("");
   };
 
   const filteredProducts = Products?.data?.filter((product: IProducts) => {
     const categoryMatch =
-      !selectedCategory || product.category === selectedCategory;
-    const searchMatch =
-      !searchTerm ||
-      product.name.toLowerCase().includes(searchTerm.toLowerCase());
+      selectedCategory === null || product.category === selectedCategory;
 
-    return categoryMatch && searchMatch;
+    const priceMatch =
+      (minPrice === null || product.price >= minPrice) &&
+      (maxPrice === null || product.price <= maxPrice);
+
+    const searchMatch = product.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    return categoryMatch && priceMatch && searchMatch;
   });
 
   const sortedProducts = filteredProducts?.sort(
@@ -77,25 +95,26 @@ const CategoriesCard = () => {
 
   return (
     <div>
-      <div className="lg:mt-0 mt-4">
+      <div>
         <img
-          className="relative w-full lg:h-96 md:h-64 h-[60vh] object-cover"
+          className="relative w-full lg:h-96 object-cover"
           src={headerImg}
           alt=""
         />
         <Link
           to="/products"
-          className="absolute lg:-mt-64 -mt-32 ml-32 lg:text-5xl font-bold text-center lg:ml-[450px]"
+          className="absolute lg:-mt-64 lg:text-5xl font-bold text-center lg:ml-[450px]"
         >
           /products
         </Link>
       </div>
-      <div className="flex">
+      <div>
         <NavLink to="/">Home </NavLink>/
         <NavLink to="/products"> products</NavLink>
       </div>
 
-      <div className="lg:mt-8 md:mt-6 flex items-center gap-4">
+      <div className="lg:mt-8 flex items-center gap-4">
+        {/* Barbell */}
         <label className="flex items-center">
           <input
             onChange={() => handleCategoryChange("Barbell")}
@@ -106,6 +125,7 @@ const CategoriesCard = () => {
           />
           Barbell
         </label>
+        {/* Treadmill */}
         <label className="flex items-center">
           <input
             onChange={() => handleCategoryChange("Treadmill")}
@@ -116,6 +136,7 @@ const CategoriesCard = () => {
           />
           Treadmill
         </label>
+        {/* Benches */}
         <label className="flex items-center">
           <input
             onChange={() => handleCategoryChange("Benches")}
@@ -128,25 +149,25 @@ const CategoriesCard = () => {
         </label>
       </div>
 
-      <div className="lg:mt-4 md:mt-3">
-        <div className="lg:flex items-center justify-start gap-4 ">
+      <div className="lg:mt-4">
+        <div className="lg:flex items-center justify-start gap-4">
           <Input
-            className="flex-1 text-black lg:mb-0 mb-4"
+            className="flex-1 text-black"
             type="number"
             id="minPrice"
             placeholder="Min Price"
             value={minPrice !== null ? minPrice : ""}
-            onChange={(e) => setMinPrice(Number(e.target.value))}
+            onChange={(e) => setMinPrice(Number(e.target.value) || null)}
           />
           <Input
-            className="flex-1 text-black lg:mb-0 mb-4"
+            className="flex-1 text-black"
             type="number"
             id="maxPrice"
             placeholder="Max Price"
             value={maxPrice !== null ? maxPrice : ""}
-            onChange={(e) => setMaxPrice(Number(e.target.value))}
+            onChange={(e) => setMaxPrice(Number(e.target.value) || null)}
           />
-          <div className="flex-1 lg:mb-0 mb-4">
+          <div className="flex-1">
             <DropdownMenu>
               <DropdownMenuTrigger className="border px-4 py-[6px] rounded-md">
                 Sort the Products
@@ -163,16 +184,25 @@ const CategoriesCard = () => {
           </div>
         </div>
         <Button
-          className="lg:mt-4 lg:mb-0 mb-4"
+          className="lg:mt-4"
           onClick={handleClearFilters}
           variant="secondary"
         >
           Clear Filters
         </Button>
-        <SearchBar />
       </div>
 
-      <div className="lg:mt-12 md:mt-8 mt-4 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 text-white">
+      <div className="lg:mt-4 lg:w-1/3 mx-auto">
+        <Input
+          className="text-black"
+          type="text"
+          placeholder="Search..."
+          value={localSearchTerm}
+          onChange={(e) => setLocalSearchTerm(e.target.value)}
+        />
+      </div>
+
+      <div className="lg:mt-12 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 text-white">
         {sortedProducts?.map((product: IProducts) => (
           <div
             key={product._id}
@@ -190,7 +220,7 @@ const CategoriesCard = () => {
               <p className="mt-2 text-gray-300">${product.description}</p>
               <div className="mt-4 flex items-start justify-between">
                 <Link to={`/products/${product._id}`}>
-                  <Button>View Details</Button>
+                  <Button className="bg-white text-black">View Details</Button>
                 </Link>
                 {/* <Button
                   onClick={() => handleAddToCart(product)}
@@ -198,7 +228,7 @@ const CategoriesCard = () => {
                 >
                   Add to Cart
                 </Button> */}
-                <h1>${product.price}</h1>
+                <h1 className="mt-2 text-gray-300">${product.price}</h1>
               </div>
             </div>
           </div>

@@ -29,7 +29,7 @@ const ImageGallery = () => {
           />
         </div>
       </div>
-      <div className="flex items-center justify-center lg:mt-12 md:mt-8 mt-6">
+      <div className="flex items-center justify-center lg:mt-12 md:mt-8 mt-6 bg-white text-black w-32 rounded-md mx-auto">
         <Button>See more</Button>
       </div>
     </div>

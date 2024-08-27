@@ -1,3 +1,4 @@
+import { IProducts } from '@/types/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const baseApi = createApi({
@@ -56,4 +57,5 @@ export const {
     useUpdateSingleProductsMutation,
     useDeleteProductMutation,
     useAddProductMutation,
+    useGetProductsByCategoryQuery
 } = baseApi;

@@ -7,7 +7,7 @@ import ProductDetails from "@/components/ProductsDetails";
 import Cart from "@/components/cart/Cart";
 import Checkout from "@/components/cart/checkout/Checkout";
 import OrderSuccess from "@/components/cart/checkout/OrderSuccess";
-import ProductsManagements from "@/pages/ProductsManagements/productsManagements";
+import ProductsManagements from "@/pages/ProductsManagements/ProductsManagements";
 // import ProductDetails from "@/components/ProductsDetails";
 
 const router = createBrowserRouter([

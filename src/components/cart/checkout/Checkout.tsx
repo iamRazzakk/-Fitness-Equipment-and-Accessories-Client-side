@@ -1,29 +1,30 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-type IUser = {
-  name: string;
-  email: string;
-  phone: number;
-  address: string;
-};
+
 const Checkout = () => {
   const navigate = useNavigate();
-  const handleSubmitForm = (e) => {
+
+  const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.target;
-    const name: string = form.name.value;
-    const email: string = form.email.value;
-    const phone: number = Number(form.phone.value);
-    const address: string = form.address.value;
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const phone = Number(formData.get("phone"));
+    const address = formData.get("address") as string;
+
+    if (name && email && phone && address) {
+      toast.success("Order placed successfully!");
+      navigate("/order-success");
+    } else {
+      toast.error("Please fill out all fields.");
+    }
   };
-  if (name && email && phone && address) {
-    toast.success("Order placed successfully!");
-    navigate("/order-success");
-  } else {
-    toast.error("Please fill out all fields.");
-  }
+
   return (
     <form onSubmit={handleSubmitForm}>
       <h1 className="text-3xl font-bold">Confirm Your Order</h1>
@@ -77,9 +78,9 @@ const Checkout = () => {
         </div>
       </div>
       <div className="mt-auto flex justify-end lg:mt-4">
-        <Link to="/order-success">
-          <Button type="submit">Place Order</Button>
-        </Link>
+        <Button className="bg-white text-black" type="submit">
+          Place Order
+        </Button>
       </div>
     </form>
   );
