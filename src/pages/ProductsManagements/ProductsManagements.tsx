@@ -44,7 +44,7 @@ const ProductsManagements = () => {
   const { data: Products, isLoading } = useGetProductsQuery([] as any);
   const [updateSingleProduct, { isLoading: isUpdating }] =
     useUpdateSingleProductsMutation();
-  const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
+  const [deleteProduct] = useDeleteProductMutation();
   const [addProduct, { isLoading: isAdding }] = useAddProductMutation();
   const [selectedCategories, setSelectedCategories] = useState<any[]>([]);
   const [minPrice, setMinPrice] = useState<any>(null);

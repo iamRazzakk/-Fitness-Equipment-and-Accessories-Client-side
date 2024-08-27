@@ -15,3 +15,9 @@ To clone this repository, run the following command:
 ```bash
 git clone https://github.com/iamRazzakk/-Fitness-Equipment-and-Accessories-Client-side
 ```
+
+server-side link:[ttps://github.com/iamRazzakk/-Fitness-Equipment-and-Accessories-Client-side](https://github.com/iamRazzakk/Fitness-Equipment-and-accessories-server)
+
+## Live URL
+
+you can access the live version of the application [here](https://fitness-equipment-and-accessories.vercel.app/).
