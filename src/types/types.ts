@@ -9,4 +9,5 @@ export type IProducts = {
     category?: any;
     createdAt?: string | number | Date
     updatedAt?: string | number | Date
+    descriptions?: string
 }

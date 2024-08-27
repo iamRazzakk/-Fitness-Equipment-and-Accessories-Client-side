@@ -187,17 +187,18 @@ const CategoriesCard = () => {
             </div>
             <div className="p-6">
               <h2 className="text-xl font-bold ">{product.name}</h2>
-              <p className="mt-2 text-gray-300">${product.price}</p>
+              <p className="mt-2 text-gray-300">${product.description}</p>
               <div className="mt-4 flex items-start justify-between">
                 <Link to={`/products/${product._id}`}>
                   <Button>View Details</Button>
                 </Link>
-                <Button
+                {/* <Button
                   onClick={() => handleAddToCart(product)}
                   variant="secondary"
                 >
                   Add to Cart
-                </Button>
+                </Button> */}
+                <h1>${product.price}</h1>
               </div>
             </div>
           </div>

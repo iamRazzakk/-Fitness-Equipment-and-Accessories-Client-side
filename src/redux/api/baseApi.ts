@@ -1,4 +1,5 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
 export const baseApi = createApi({
     reducerPath: 'baseApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api' }),
@@ -6,15 +7,40 @@ export const baseApi = createApi({
         getProducts: builder.query({
             query: () => ({
                 method: "GET",
-                url: '/products'
-            })
+                url: '/products',
+            }),
+            providesTags: ['ProductList'],
         }),
         getSingleProducts: builder.query({
             query: (id) => ({
                 method: "GET",
-                url: `/products/${id}`
-            })
-        })
+                url: `/products/${id}`,
+            }),
+        }),
+        updateSingleProducts: builder.mutation({
+            query: ({ id, data }) => ({
+                method: "PUT",
+                url: `/products/${id}`,
+                body: data,
+                headers: {
+                    "Content-Type": 'application/json',
+                },
+            }),
+            invalidatesTags: ['ProductList'],
+        }),
+        deleteProduct: builder.mutation({
+            query: (id) => ({
+                method: "DELETE",
+                url: `/products/${id}`,
+            }),
+            invalidatesTags: ['ProductList'],
+        }),
     }),
-})
-export const { useGetProductsQuery, useGetSingleProductsQuery } = baseApi
+});
+
+export const {
+    useGetProductsQuery,
+    useGetSingleProductsQuery,
+    useUpdateSingleProductsMutation,
+    useDeleteProductMutation
+} = baseApi;

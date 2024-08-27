@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { useGetProductsQuery } from "@/redux/api/baseApi";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+  useDeleteProductMutation,
+  useGetProductsQuery,
+  useUpdateSingleProductsMutation,
+} from "@/redux/api/baseApi";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -19,7 +18,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../components/ui/table";
+} from "@/components/ui/table";
 import { MdDelete } from "react-icons/md";
 import { RxUpdate } from "react-icons/rx";
 import { format } from "date-fns";
@@ -35,11 +34,18 @@ import {
 
 const ProductsManagements = () => {
   const { data: Products, isLoading } = useGetProductsQuery([]);
+  const [updateSingleProduct, { isLoading: isUpdating }] =
+    useUpdateSingleProductsMutation();
+  const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [minPrice, setMinPrice] = useState<number | null>(null);
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
   const [sortOrder, setSortOrder] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [productToUpdate, setProductToUpdate] = useState<IProducts | null>(
+    null
+  );
+  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState<IProducts | null>(
     null
   );
@@ -66,20 +72,15 @@ const ProductsManagements = () => {
   };
 
   const filteredProducts = Products?.data?.filter((product: IProducts) => {
-    // Category filtering
     const categoryMatch =
       selectedCategories.length === 0 ||
       selectedCategories.includes(product.category);
-
-    // Price filtering
     const priceMatch =
       (minPrice === null || product.price >= minPrice) &&
       (maxPrice === null || product.price <= maxPrice);
-
     return categoryMatch && priceMatch;
   });
 
-  // Sorting products
   const sortedProducts = filteredProducts?.sort(
     (a: IProducts, b: IProducts) => {
       if (sortOrder === "asc") {
@@ -92,33 +93,55 @@ const ProductsManagements = () => {
     }
   );
 
-  // Handle delete action
-  const handleDeleteProduct = (product: IProducts) => {
-    setProductToDelete(product);
-    setIsModalOpen(true);
+  const handleDeleteProduct = async () => {
+    if (productToDelete) {
+      try {
+        await deleteProduct(productToDelete._id).unwrap();
+        console.log("Product deleted successfully");
+        setDeleteDialogOpen(false);
+        setProductToDelete(null);
+      } catch (error) {
+        console.error("Something is Wrong Product not delete", error);
+      }
+    }
   };
 
-  const confirmDelete = () => {
-    // Handle the deletion of the product here
-    // Example: dispatch(deleteProduct(productToDelete._id));
-    setIsModalOpen(false);
-    setProductToDelete(null);
+  const handleUpdateProduct = (product: IProducts) => {
+    setProductToUpdate(product);
+    setUpdateDialogOpen(true);
   };
 
-  const cancelDelete = () => {
-    setIsModalOpen(false);
-    setProductToDelete(null);
+  const handleUpData = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (productToUpdate) {
+      const form = e.currentTarget;
+      const name = form.name.value;
+      const description = form.description.value;
+      const price = Number(form.price.value);
+      const stock = Number(form.stock.value);
+
+      try {
+        await updateSingleProduct({
+          id: productToUpdate._id,
+          data: { name, description, price, stock },
+        }).unwrap();
+
+        // Close the dialog and reset the state
+        setUpdateDialogOpen(false);
+        setProductToUpdate(null);
+      } catch (error) {
+        console.error("Failed to update product: ", error);
+      }
+    }
   };
 
   return (
     <div className="p-4 rounded-lg shadow-md">
-      {/* Filters */}
       <h1 className="text-3xl font-bold mb-4">
         Product List ({Products?.data.length})
       </h1>
       <div className="mb-4">
         <div className="flex flex-col lg:flex-row items-start gap-4 mb-4">
-          {/* Category Filters */}
           <div className="flex gap-4">
             <label className="flex items-center">
               <input
@@ -152,20 +175,19 @@ const ProductsManagements = () => {
             </label>
           </div>
 
-          {/* Price Filters */}
           <div className="flex gap-4">
             <Input
               type="number"
               placeholder="Min Price"
               value={minPrice !== null ? minPrice : ""}
-              onChange={(e) => setMinPrice(Number(e.target.value) || null)}
+              onChange={(e) => setMinPrice(Number(e.target.value))}
               className="w-32"
             />
             <Input
               type="number"
               placeholder="Max Price"
               value={maxPrice !== null ? maxPrice : ""}
-              onChange={(e) => setMaxPrice(Number(e.target.value) || null)}
+              onChange={(e) => setMaxPrice(Number(e.target.value))}
               className="w-32"
             />
             <DropdownMenu>
@@ -215,37 +237,91 @@ const ProductsManagements = () => {
               </TableCell>
               <TableCell className="font-medium">
                 <MdDelete
-                  onClick={() => handleDeleteProduct(product)}
+                  onClick={() => {
+                    setProductToDelete(product);
+                    setDeleteDialogOpen(true);
+                  }}
                   className="mb-2 text-2xl cursor-pointer"
                 />
-                <RxUpdate className="text-2xl" />
+                <RxUpdate
+                  onClick={() => handleUpdateProduct(product)}
+                  className="text-2xl cursor-pointer"
+                />
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
 
-      {/* Alert Dialog for Confirming Delete */}
-      {isModalOpen && (
-        <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel onClick={cancelDelete}>
+      {/* Update Product Dialog */}
+      <Dialog
+        open={updateDialogOpen}
+        onOpenChange={(open) => setUpdateDialogOpen(open)}
+      >
+        <DialogTitle>Update Product</DialogTitle>
+        <DialogContent>
+          {productToUpdate && (
+            <form onSubmit={handleUpData}>
+              <div className="grid gap-4">
+                <Input
+                  name="name"
+                  defaultValue={productToUpdate.name}
+                  placeholder="Product Name"
+                />
+                <Input
+                  name="description"
+                  defaultValue={productToUpdate.description}
+                  placeholder="Description"
+                />
+                <Input
+                  name="price"
+                  type="number"
+                  defaultValue={productToUpdate.price}
+                  placeholder="Price"
+                />
+                <Input
+                  name="stock"
+                  type="number"
+                  defaultValue={productToUpdate.stock}
+                  placeholder="Stock"
+                />
+                <Button type="submit" disabled={isUpdating}>
+                  {isUpdating ? "Updating..." : "Update Product"}
+                </Button>
+              </div>
+            </form>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Product Dialog */}
+      <Dialog
+        open={deleteDialogOpen}
+        onOpenChange={(open) => setDeleteDialogOpen(open)}
+      >
+        <DialogTitle>Delete Product</DialogTitle>
+        <DialogContent>
+          {productToDelete && (
+            <div>
+              <p>Are you sure you want to delete {productToDelete.name}?</p>
+              <Button
+                onClick={handleDeleteProduct}
+                disabled={isDeleting}
+                className="mt-4"
+              >
+                {isDeleting ? "Deleting..." : "Confirm"}
+              </Button>
+              <Button
+                onClick={() => setDeleteDialogOpen(false)}
+                variant="secondary"
+                className="mt-4 ml-2"
+              >
                 Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction onClick={confirmDelete}>
-                Continue
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      )}
+              </Button>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
