@@ -9,6 +9,7 @@ import {
 } from "@/redux/features/cartSlice";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,18 @@ const Cart = () => {
     dispatch(removeFromCart(productId));
   };
   const hasProducts = products.length > 0;
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <div className="p-4   rounded-lg shadow-lg">
